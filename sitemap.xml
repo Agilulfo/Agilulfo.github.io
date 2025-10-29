@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://hedoes.it/</loc>
+    </url>
+    <url>
+        <loc>https://hedoes.it/about/</loc>
+    </url>
+    <url>
+        <loc>https://hedoes.it/blog/</loc>
+    </url>
+    <url>
+        <loc>https://hedoes.it/blog/fpv-01/</loc>
+        <lastmod>2025-09-24</lastmod>
+    </url>
+    <url>
+        <loc>https://hedoes.it/blog/fpv-02/</loc>
+        <lastmod>2025-09-27</lastmod>
+    </url>
+    <url>
+        <loc>https://hedoes.it/blog/fpv-series/</loc>
+        <lastmod>2025-09-23</lastmod>
+    </url>
+    <url>
+        <loc>https://hedoes.it/blog/micropython-rp2040/</loc>
+        <lastmod>2025-10-21</lastmod>
+    </url>
+    <url>
+        <loc>https://hedoes.it/blog/rp2040-pomodoro/</loc>
+        <lastmod>2025-10-29</lastmod>
+    </url>
+</urlset>

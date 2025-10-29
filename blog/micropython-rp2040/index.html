@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" >
+<head>
+	<!-- 2025-10-29 Wed 09:48 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9a9996" />
+	<title>The Joy of Running (Micro) Python on a RP2040 Microcontroller - He does it</title>
+	<link rel="canonical" href="https://hedoes.it/blog/micropython-rp2040/" /><link rel="icon" type="image/png" href="https://hedoes.it/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://hedoes.it/apple-touch-icon.png" />
+	<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='-.07em' y='.89em' font-size='90'%3E💣%3C/text%3E%3C/svg%3E">
+<style type="text/css">
+	:root {--accent-color: #6f8396;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://hedoes.it/style.css" />
+			<link type="text/css" rel="stylesheet" href="https://hedoes.it/icons.css" />
+			<script type="text/javascript" defer  src="https://hedoes.it/closable.js"></script>
+			<script type="text/javascript" defer  src="https://hedoes.it/theme-switcher.js"></script>
+
+	<meta property="og:site_name" content="He does it" />
+	<meta property="og:title" content="The Joy of Running (Micro) Python on a RP2040 Microcontroller - He does it" />
+	<meta property="og:url" content="https://hedoes.it/blog/micropython-rp2040/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://hedoes.it/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+
+		
+<header id="site-nav">
+	<nav>
+		<a href="#main-content" tabindex="0">
+			Skip to Main Content
+		</a>
+		<ul>
+			<li id="home">
+				<a href="https://hedoes.it">
+					<i class="icon"></i>He does it</a>
+			</li>
+			<li class="divider"></li>
+					<li>
+						<a href="https://hedoes.it/blog">Blog</a>
+					</li>
+					<li>
+						<a href="https://hedoes.it/about">About</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;github.com&#x2F;Agilulfo" rel="" class="external">github</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;flaviodinatale&#x2F;" rel="" class="external">linkedin</a>
+					</li>
+				<li id="theme-switcher">
+					<details class="closable">
+						<summary class="circle" title="Theme">
+							<i class="icon"></i>
+						</summary>
+						<ul>
+							<li>
+								<button class="circle" id="theme-light" title="Switch to Light Theme">
+									<i class="icon"></i>
+								</button>
+							</li>
+							<li>
+								<button class="circle" id="theme-dark" title="Switch to Dark Theme">
+									<i class="icon"></i>
+								</button>
+							</li>
+							<li>
+								<button class="circle" id="theme-system" title="Use System Theme">
+									<i class="icon"></i>
+								</button>
+							</li>
+						</ul>
+					</details>
+				</li>
+		</ul>
+	</nav>
+</header>
+<main id="main-content">
+		<article><div id="heading"><p>
+				<small>
+					<time datetime=" 2025-10-21T00:00:00+00:00">Published on
+						October 21, 2025</time></small>
+			</p><h1>The Joy of Running (Micro) Python on a RP2040 Microcontroller</h1>
+	</div>
+
+	<div id="buttons-container"><a id="go-to-top" href="#top" title="Go to Top"><i class="icon"></i></a></div><p>I know, I'm late, but I've finally joined the party!</p>
+<figure>
+<img class="no-hover"alt="A YD-RP2040 board"src="RP2040_board.JPG"/>
+<figcaption>The YD-RP2040 board I've used for my experiments.</figcaption>
+</figure>
+<p>I did play with microcontrollers during my final years at university.
+Back then I was part of a robotics team and I developed the firmware for a color sensor.</p>
+<p>As part of my bachelor thesis, I even wrote the code for a bat-meter. You might wonder what that is. Well... that's a story for another time.</p>
+<p>Time has passed and I never truly got to play with microcontrollers again.
+Mainly because I've felt intimidated with:</p>
+<ol>
+<li>having to design my own board</li>
+<li>getting proficient in a low-level language that allows you to write firmware for a microcontroller</li>
+<li>having an exciting project to do.</li>
+</ol>
+<p>Eventually, the stars aligned, and I finally got to try running Python on an <a href="https://www.raspberrypi.com/products/rp2040/">RP2040</a>.</p>
+<p>You can <a href="/blog/rp2040-pomodoro/">read here</a> about my first project developed in MicroPython.</p>
+<h2 id="backstory"><a class="zola-anchor" href="#backstory" aria-label="Anchor link for: backstory"><i class="icon"></i></a>
+Backstory</h2>
+<p>It all started with me wanting for a long time to replace the PCB inside my IBM Model M keyboard with a board capable of running <a href="https://docs.qmk.fm/">QMK</a> firmware and offering the unrenounceable USB-C port.</p>
+<p>A while back the QMK firmware added support for the RP2040 microcontroller and I've also discovered that some knockoff clone boards are available for cheap with USB C ports. I bought one and put together a little micropad to test if everything worked. It did.</p>
+<p>Fast forward to a few days ago, I remembered my original plan and purchased two RP2040-based boards that break out enough pins to connect the Model M matrix because the one I already had didn't.</p>
+<p>One of the two boards, known as <a href="https://circuitpython.org/board/vcc_gnd_yd_rp2040/">YD-RP2040</a>, has a couple of nice features that make it a great candidate for anyone wanting to experiment with writing software for microcontrollers.</p>
+<p>Pins 23, 24, and 25 are connected to an RGB LED, a blue LED, and a button.</p>
+<p>That's plenty of IO options to start writing the classic hello world of the microcontroller world. No more annoying breadboards, wires and clutter.</p>
+<p>With the first intimidating obstacle removed, I still had to figure out how to write the firmware. Despite having recently tried to learn Rust again, I'm not really fluent in any low-level language. Fortunately, I remembered my ex-colleague and friend Mattia mentioning <a href="https://docs.micropython.org/en/latest/rp2/quickref.html">MicroPython</a>.</p>
+<p>The knowledge of MicroPython's existence rested for years in the back of my mind, but it floated back to the surface at the right time!</p>
+<p>So... yeah! That's pretty cool and easy stuff!</p>
+<h2 id="what-is-using-micropython-like"><a class="zola-anchor" href="#what-is-using-micropython-like" aria-label="Anchor link for: what-is-using-micropython-like"><i class="icon"></i></a>
+What is using MicroPython like?</h2>
+<p>In short, you flash the Micropython firmware on the microcontroller (which, in the case of the RP2040, consists of transferring a file over USB).</p>
+<p>No need for a hardware programmer and fiddly cables, just a USB-C cable.</p>
+<p>Then you write your code in Python and use the <code>mpremote</code> (MicroPython remote) command to transfer the Python file to your board's memory, and you are good to go!</p>
+<p>If you can write Python code, you can already program a microcontroller!</p>
+<p>Debugging is also quite easy.
+You once again use <code>mpremote</code> to check the output of your program (via serial over USB), much like you would with a standard Python program.</p>
+<p>When something crashes, you can simply connect and look at the stack trace or everything you print.</p>
+<h3 id="tl-dr"><a class="zola-anchor" href="#tl-dr" aria-label="Anchor link for: tl-dr"><i class="icon"></i></a>
+TL;DR</h3>
+<p>If you would like to experiment with microcontrollers and you already know Python, just grab a board with an RP2040, possibly the YD-RP2040 (which is very cheap and has some nice onboard features), and start coding.</p>
+<p>My only regret is not having tried this earlier.</p>
+
+</article><hr />
+	<nav id="post-nav"><a class="post-nav-item post-nav-prev" href="https:&#x2F;&#x2F;hedoes.it&#x2F;blog&#x2F;fpv-02&#x2F;">
+				<div class="nav-arrow">Previous</div>
+				<span class="post-title">FPV series part 2: Learn to Fly</span>
+			</a><a class="post-nav-item post-nav-next" href="https:&#x2F;&#x2F;hedoes.it&#x2F;blog&#x2F;rp2040-pomodoro&#x2F;">
+				<div class="nav-arrow">Next</div>
+				<span class="post-title">My RP2040 Pomodoro Timer</span>
+			</a></nav>
+	</main>
+	<footer id="site-footer">
+		<nav>
+			<ul>
+					<li>
+						<a href="https://hedoes.it/blog">Blog</a>
+					</li>
+					<li>
+						<a href="https://hedoes.it/about">About</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;github.com&#x2F;Agilulfo" rel="" class="external">github</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;flaviodinatale&#x2F;" rel="" class="external">linkedin</a>
+					</li>
+			</ul>
+		</nav>
+		<p>
+			<small>Powered by <a class="link external" href="https://www.getzola.org" rel="">Zola</a> and <a class="link external" href="https://duckquill.daudix.one" rel="">Duckquill</a>
+			</small>
+		</p>
+</footer>
+
+	
+
+	<style type="text/css">
+	:root {
+		--alert-note-text: "Note";
+		--alert-tip-text: "Tip";
+		--alert-important-text: "Important";
+		--alert-warning-text: "Warning";
+		--alert-caution-text: "Caution";
+	}
+</style>
+
+
+</body>
+</html>

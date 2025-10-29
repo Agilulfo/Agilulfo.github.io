@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  lang="en" >
+<head>
+	<!-- 2025-10-29 Wed 09:48 -->
+	<meta charset="UTF-8" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="theme-color" content="#9a9996" />
+	<title>My RP2040 Pomodoro Timer - He does it</title>
+	<link rel="canonical" href="https://hedoes.it/blog/rp2040-pomodoro/" /><link rel="icon" type="image/png" href="https://hedoes.it/favicon.png" />
+
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="https://hedoes.it/apple-touch-icon.png" />
+	<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='-.07em' y='.89em' font-size='90'%3E💣%3C/text%3E%3C/svg%3E">
+<style type="text/css">
+	:root {--accent-color: #6f8396;}</style>
+
+			<link type="text/css" rel="stylesheet" href="https://hedoes.it/style.css" />
+			<link type="text/css" rel="stylesheet" href="https://hedoes.it/icons.css" />
+			<script type="text/javascript" defer  src="https://hedoes.it/closable.js"></script>
+			<script type="text/javascript" defer  src="https://hedoes.it/theme-switcher.js"></script>
+
+	<meta property="og:site_name" content="He does it" />
+	<meta property="og:title" content="My RP2040 Pomodoro Timer - He does it" />
+	<meta property="og:url" content="https://hedoes.it/blog/rp2040-pomodoro/" />
+	<meta property="og:description" content="" /><meta property="og:image" content="https://hedoes.it/card.png" /><meta property="og:locale" content="en_US" />
+</head>
+
+<body>
+
+		
+<header id="site-nav">
+	<nav>
+		<a href="#main-content" tabindex="0">
+			Skip to Main Content
+		</a>
+		<ul>
+			<li id="home">
+				<a href="https://hedoes.it">
+					<i class="icon"></i>He does it</a>
+			</li>
+			<li class="divider"></li>
+					<li>
+						<a href="https://hedoes.it/blog">Blog</a>
+					</li>
+					<li>
+						<a href="https://hedoes.it/about">About</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;github.com&#x2F;Agilulfo" rel="" class="external">github</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;flaviodinatale&#x2F;" rel="" class="external">linkedin</a>
+					</li>
+				<li id="theme-switcher">
+					<details class="closable">
+						<summary class="circle" title="Theme">
+							<i class="icon"></i>
+						</summary>
+						<ul>
+							<li>
+								<button class="circle" id="theme-light" title="Switch to Light Theme">
+									<i class="icon"></i>
+								</button>
+							</li>
+							<li>
+								<button class="circle" id="theme-dark" title="Switch to Dark Theme">
+									<i class="icon"></i>
+								</button>
+							</li>
+							<li>
+								<button class="circle" id="theme-system" title="Use System Theme">
+									<i class="icon"></i>
+								</button>
+							</li>
+						</ul>
+					</details>
+				</li>
+		</ul>
+	</nav>
+</header>
+<main id="main-content">
+		<article><div id="heading"><p>
+				<small>
+					<time datetime=" 2025-10-29T00:00:00+00:00">Published on
+						October 29, 2025</time></small>
+			</p><h1>My RP2040 Pomodoro Timer</h1>
+	</div>
+
+	<div id="buttons-container"><a id="go-to-top" href="#top" title="Go to Top"><i class="icon"></i></a></div><figure>
+<img class="no-hover"alt="the hue loop animation"src="hue_loop.gif"/>
+<figcaption>I keep my timer hanging from my screen.</figcaption>
+</figure>
+<p>I've finally completed a project I've wanted to make with microcontrollers for a long time!</p>
+<p>You might know the Pomodoro Technique;</p>
+<p>in short, you use a timer to improve your productivity.</p>
+<p>A 25-minute timer is dedicated to getting some work done, and a 5-minute timer is used to take a break. The idea is that taking short breaks often improves focus and productivity.</p>
+<h3 id="why-i-decided-to-make-my-very-own-timer"><a class="zola-anchor" href="#why-i-decided-to-make-my-very-own-timer" aria-label="Anchor link for: why-i-decided-to-make-my-very-own-timer"><i class="icon"></i></a>
+Why I Decided to Make My Very Own Timer</h3>
+<p>From time to time, I've used this technique, but I've always struggled to find a timer that doesn't get in the way of what I'm doing.</p>
+<p>I've experimented with different timers, but none of them worked for me:</p>
+<ul>
+<li>I've used <a href="https://www.toptal.com/project-managers/tomato-timer">this</a> web app, but I always end up losing the tab. Using it in fullscreen mode on a second screen distracts me and makes me anxious.</li>
+<li>I've used Clockwork Tomato Android application, which has many functions (maybe too many), but I'm not a big fan of keeping my phone unlocked on my desk.</li>
+<li>You can use whatever timer you have available, but I don't like the noise they make. I would prefer visual feedback.</li>
+</ul>
+<h3 id="my-requirements"><a class="zola-anchor" href="#my-requirements" aria-label="Anchor link for: my-requirements"><i class="icon"></i></a>
+My Requirements</h3>
+<p>So, I started imagining what the perfect Pomodoro timer would be for me, and I've come up with the following requirements:</p>
+<ul>
+<li>No sound alarm.</li>
+<li>Visual, minimalist, and not distracting indication of the timer status.</li>
+<li>Simple interface to start the timer that moves automatically from work to break timer.</li>
+<li>Standalone device that can be kept on my desk.</li>
+</ul>
+<p>A simple board with a microcontroller, a few LEDs, and one or more buttons to control the device would be the perfect candidate for the job.</p>
+<h3 id="the-hardware"><a class="zola-anchor" href="#the-hardware" aria-label="Anchor link for: the-hardware"><i class="icon"></i></a>
+The Hardware</h3>
+<p>I accidentally stumbled across the YD-RP2040 board.</p>
+<p>This board has all I need:</p>
+<ul>
+<li>An RGB LED that can be used to create many animations to indicate the timer status.</li>
+<li>A button that can be used by the user.</li>
+<li>A little blue LED.</li>
+</ul>
+<h3 id="my-experience-developing-the-firmware"><a class="zola-anchor" href="#my-experience-developing-the-firmware" aria-label="Anchor link for: my-experience-developing-the-firmware"><i class="icon"></i></a>
+My Experience Developing the Firmware</h3>
+<p>In the <a href="https://github.com/Agilulfo/RP2040-pomodoro">RP2040-pomodoro</a> GitHub repository, you will find all the details on how to operate the device and on how to flash your own.</p>
+<p>Here, I just want to discuss the things I've learned writing this firmware.</p>
+<h4 id="how-to-achieve-multitasking"><a class="zola-anchor" href="#how-to-achieve-multitasking" aria-label="Anchor link for: how-to-achieve-multitasking"><i class="icon"></i></a>
+How to Achieve Multitasking?</h4>
+<p>The first challenge I immediately faced was to figure out how to achieve some resemblance of multitasking.</p>
+<p>At the same time, a few things need to happen in parallel:</p>
+<ul>
+<li>You need to monitor the button to detect user interaction.</li>
+<li>You need to display the desired animation by continuously updating the LED state.</li>
+<li>You need to keep track of time to generate events, for instance, the timer reaching the end of the cycle.</li>
+</ul>
+<p>A trivial sequential program can usually do only one thing at a time. If, for instance, you wait for a button to be pressed using a loop, you will not be able to do anything else. Unless...</p>
+<h4 id="the-cooperation-model"><a class="zola-anchor" href="#the-cooperation-model" aria-label="Anchor link for: the-cooperation-model"><i class="icon"></i></a>
+The Cooperation Model</h4>
+<p>You can make it look like many things are happening at the same time if you do small pieces of each thing for a short while and then move to the next.</p>
+<p>As long as you do it right and every task runs for a very short amount of time, it will look like many things are happening at the same time, even if, in reality, they happen sequentially.</p>
+<p>This is how I've implemented my <a href="https://github.com/Agilulfo/RP2040-pomodoro/tree/1.0.0">first</a> version. I've structured my code so that a main loop would take care of <a href="https://github.com/Agilulfo/RP2040-pomodoro/blob/1.0.0/src/tasks.py#L37-L47">running sequentially all the currently registered tasks</a>.</p>
+<p>Of course, each task you run needs to cooperate and run for a very short time; otherwise, the resemblance of multitasking will be lost.</p>
+<p>Some care needs to be given in order to make sure that this delicate dance happens smoothly. To help with this, I've used a <strong>state machine</strong> to help with managing the transition from one state to another, removing and adding tasks to the runner.</p>
+<h4 id="using-asyncio"><a class="zola-anchor" href="#using-asyncio" aria-label="Anchor link for: using-asyncio"><i class="icon"></i></a>
+Using Asyncio</h4>
+<p>I've developed this firmware in MicroPython, which offers a subset of the Python Asyncio functionality.</p>
+<p>Asyncio is a framework that helps in writing asynchronous code (many other languages have similar frameworks). It helps in achieving multitasking by providing the basic infrastructure to run purposely made pieces of code, called tasks.</p>
+<p>I've intentionally avoided using it in my first version just because I wanted to see how difficult it would have been to write my rudimentary event loop. But as soon as I got it working, I decided to refactor everything to use the Asyncio framework instead.</p>
+<p>That's how the <a href="https://github.com/Agilulfo/RP2040-pomodoro/tree/2.0.0">version 2</a> has come to life. It is functionally identical to the first version, but it leverages the Asyncio framework.</p>
+<p><a href="https://github.com/Agilulfo/RP2040-pomodoro/blob/2.0.0/src/state_machine.py#L18-L71">This coroutine</a> is the core of the program.</p>
+<ul>
+<li>It creates a task that always runs in the background, checking for user input and generating events when an interaction is detected.</li>
+<li>It waits for events to come.</li>
+<li>It passes the events to the current running task and takes care of changing tasks if necessary.</li>
+</ul>
+<h4 id="conclusion"><a class="zola-anchor" href="#conclusion" aria-label="Anchor link for: conclusion"><i class="icon"></i></a>
+Conclusion</h4>
+<p>The Asyncio implementation is a little more elegant, but practically, you would not be able to tell the difference as a user.</p>
+<p>It's worth to mention that the MicroPython implementation of Asyncio is not complete so you might have to improvise and create workarounds to achieve your desired behaviour.</p>
+<p>Time accuracy in both the versions I've developed is not perfect.</p>
+<p>A different approach should have been taken if the exact timing had been crucial for a given application, probably involving the use of <a href="https://docs.micropython.org/en/v1.26.0/rp2/quickref.html#timers">timers</a> and <a href="https://docs.micropython.org/en/v1.26.0/reference/isr_rules.html#isr-rules">interrupts</a>.</p>
+<p>For my application, accuracy wasn't a big concern, and using <a href="https://docs.micropython.org/en/v1.26.0/library/time.html#time.ticks_ms">ticks</a> and <a href="https://docs.micropython.org/en/v1.26.0/library/time.html#time.time">time</a> allowed me to achieve all the precision I wished for. So, I didn't bother to go down the timer and interrupt rabbit hole, for which I would recommend reading the documentation.</p>
+
+</article><hr />
+	<nav id="post-nav"><a class="post-nav-item post-nav-prev" href="https:&#x2F;&#x2F;hedoes.it&#x2F;blog&#x2F;micropython-rp2040&#x2F;">
+				<div class="nav-arrow">Previous</div>
+				<span class="post-title">The Joy of Running (Micro) Python on a RP2040 Microcontroller</span>
+			</a></nav>
+	</main>
+	<footer id="site-footer">
+		<nav>
+			<ul>
+					<li>
+						<a href="https://hedoes.it/blog">Blog</a>
+					</li>
+					<li>
+						<a href="https://hedoes.it/about">About</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;github.com&#x2F;Agilulfo" rel="" class="external">github</a>
+					</li>
+					<li>
+						<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;flaviodinatale&#x2F;" rel="" class="external">linkedin</a>
+					</li>
+			</ul>
+		</nav>
+		<p>
+			<small>Powered by <a class="link external" href="https://www.getzola.org" rel="">Zola</a> and <a class="link external" href="https://duckquill.daudix.one" rel="">Duckquill</a>
+			</small>
+		</p>
+</footer>
+
+	
+
+	<style type="text/css">
+	:root {
+		--alert-note-text: "Note";
+		--alert-tip-text: "Tip";
+		--alert-important-text: "Important";
+		--alert-warning-text: "Warning";
+		--alert-caution-text: "Caution";
+	}
+</style>
+
+
+</body>
+</html>
